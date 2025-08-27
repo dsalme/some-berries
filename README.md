@@ -56,8 +56,9 @@ pipx install uv
 Once `uv` is installed, sync dependencies (install dependencies in uv's virtual env):
 
 ```bash
-uv lock
-uv sync
+uv venv # creates a virtual env
+uv lock # creates a lock file
+uv sync # installs dependencies in virtual env
 ```
 
 Then you can:
