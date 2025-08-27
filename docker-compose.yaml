@@ -1,0 +1,15 @@
+services:
+  berries:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    container_name: berries
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app/
+      # Comment the next line if you don't want to have access python's virtual env outside the docker container
+      - /app/.venv
+    restart: "always"
