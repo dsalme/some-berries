@@ -1,6 +1,13 @@
-def main():
-    print("Hello from berries!")
+from fastapi import FastAPI
+from fastapi.responses import Response
 
 
-if __name__ == "__main__":
-    main()
+app = FastAPI()
+
+
+@app.route('/')
+async def home(request):
+    return Response("hello")
+
+
+
