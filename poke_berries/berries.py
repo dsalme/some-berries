@@ -91,8 +91,8 @@ async def get_berries_data():
 async def get_berry_stats():
     try:
         berries_data = await get_berries_data()
-    except httpx.RequestError as e:
-        raise HTTPException(status_code=404, detail=e)
+    except httpx.HTTPStatusError as e:
+        raise HTTPException(status_code=404)
     else:
         response_dict = {
             "names": berries_data.get("names"),
@@ -103,8 +103,8 @@ async def get_berry_stats():
 async def get_data_and_plot():
     try:
         berries_data = await get_berries_data()
-    except httpx.RequestError as e:
-        raise HTTPException(status_code=404, detail=e)
+    except httpx.HTTPStatusError as e:
+        raise HTTPException(status_code=404)
     else:
         b64plot = generate_plot(berries_data)
         response_dict = {
