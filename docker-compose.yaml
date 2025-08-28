@@ -8,8 +8,19 @@ services:
     container_name: berries
     ports:
       - "8000:8000"
-    volumes:
-      - ./:/app/
+    # volumes:
+      # - ./:/app/
       # Comment the next line if you don't want to have access python's virtual env outside the docker container
-      - /app/.venv
+      # - /app/.venv
     restart: "always"
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /app/
+          ignore:
+            - .venv
+            - Dockerfile
+            - docker-compose.yaml
+        - action: rebuild
+          path: pyproject.toml
