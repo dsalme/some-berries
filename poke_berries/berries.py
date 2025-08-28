@@ -59,7 +59,6 @@ async def get_berries_data():
     if not cache.get("berries_data"):
         logger.info("Cache key not found, building cache.")
         berries_data = await client.get_berries_data()
-        logger.info(berries_data)
 
         to_json = berries_data.json()
         count = to_json.get("count")
