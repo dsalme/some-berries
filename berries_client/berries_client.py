@@ -14,10 +14,15 @@ class BerriesClient:
             base_url=POKE_BERRIES_ROOT_URL,
         )
 
-    async def get_berries(self):
+    async def get_berries_data(self):
         berries = await self.session.get('/api/v2/berry')
         berries.raise_for_status()
         return berries
+
+    async def get_berry(self, id):
+        berry = await self.session.get(f'/api/v2/berry/{id}')
+        berry.raise_for_status()
+        return berry
 
 
 client = BerriesClient()
