@@ -1,25 +1,23 @@
+import httpx
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRouter
-import httpx
-from berries_client import client
+
+from poke_berries.berries import get_berry_stats
 import logging
+
 
 logger = logging.getLogger(__name__)
 
 
-router = APIRouter(prefix="/allBerryStats")
+router = APIRouter(prefix="")
 
-@router.get("/")
+@router.get("/allBerryStats")
 async def berry_stats():
     logger.info("We also log some berry-related things")
     try:
-        poke_things = await client.get_berries()
+        poke_stats = await get_berry_stats()
     except httpx.RequestError as e:
         logger.warning(e)
         raise e
     else:
-        logger.info(poke_things)
-
-        resp = poke_things.json()
-        return JSONResponse(resp)
-
+        return JSONResponse(poke_stats)

@@ -65,3 +65,10 @@ Then you can:
 ```bash
 uv run uvicorn berries:app --host 0.0.0.0 --port 8000
 ```
+
+
+## How to run tests:
+Dev dependencies include pytest, you can run tests by running this in your terminal, which will run tests inside the container:
+```bash
+docker compose exec berries uv run pytest
+```

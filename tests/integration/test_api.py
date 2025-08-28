@@ -9,7 +9,7 @@ class TestHomeApi:
 
 class TestBerriesApi:
 
-    def test_berries_page(self, client):
+    def test_berries_page_success(self, client):
         req = client.get("/allBerryStats")
         assert req.status_code == 200
 
