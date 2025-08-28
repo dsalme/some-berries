@@ -44,6 +44,9 @@ Online Url: [https://some-berries.onrender.com/](https://some-berries.onrender.c
 - `/berriesGraph`
 > Displays an html page with a berries growth time histogram
 
+- `/docs`
+> Displays a swagger interface with available endpoints
+
 ### In case you want to run it outside the docker container
 
 In order to run the app outside docker, you'll need to set up/install a couple of dependencies:
