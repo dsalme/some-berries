@@ -30,12 +30,5 @@ LOGGING_CONFIG["root"] = {
     "level": "INFO",
 }
 
-# bot logger
-LOGGING_CONFIG["loggers"]["bot"] = {
-    "handlers": ["console"],
-    "level": "INFO",
-    "propagate": True,
-}
-
 # logging config
 logging.config.dictConfig(LOGGING_CONFIG)
