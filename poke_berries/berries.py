@@ -1,6 +1,10 @@
 import asyncio
+import base64
+import io
 import statistics
 import os
+import httpx
+import matplotlib.pyplot as plt
 from fastapi.exceptions import HTTPException
 from cachetools import TTLCache
 from collections import Counter
@@ -18,9 +22,9 @@ def calculate_berry_stats(growth_times):
 
     min_gt = min(growth_times)
     max_gt = max(growth_times)
-    median_gt = statistics.median(growth_times)
-    variance_gt = statistics.variance(growth_times)
-    mean_gt = statistics.mean(growth_times)
+    median_gt = round(statistics.median(growth_times), 2)
+    variance_gt = round(statistics.variance(growth_times), 2)
+    mean_gt = round(statistics.mean(growth_times), 2)
     frequency = Counter(growth_times)
 
     return {
@@ -31,6 +35,25 @@ def calculate_berry_stats(growth_times):
         "mean_growth_time": mean_gt,
         "frequency_growth_time": frequency
     }
+
+def generate_plot(berries_data):
+    growth_times = berries_data.get("growth_times")
+    fig, axs = plt.subplots(tight_layout=True)
+
+    axs.set_title("Growth time histogram")
+    axs.set_xlabel("Count")
+    axs.set_ylabel("Growth time")
+    axs.hist(growth_times, bins=max(growth_times))
+
+    img = io.BytesIO()
+    fig.savefig(img, format='png',
+                bbox_inches='tight')
+
+    b64string = "data:image/png;base64,"
+    b64string += base64.b64encode(img.getvalue()).decode('utf8')
+
+    return b64string
+
 
 async def get_berries_data():
     if not cache.get("berries_data"):
@@ -66,14 +89,26 @@ async def get_berries_data():
         return cache.get("berries_data")
 
 async def get_berry_stats():
-
-    berries_data = await get_berries_data()
-
-    if berries_data:
+    try:
+        berries_data = await get_berries_data()
+    except httpx.RequestError as e:
+        raise HTTPException(status_code=404, detail=e)
+    else:
         response_dict = {
             "names": berries_data.get("names"),
             **calculate_berry_stats(berries_data.get("growth_times"))
         }
         return response_dict
+
+async def get_data_and_plot():
+    try:
+        berries_data = await get_berries_data()
+    except httpx.RequestError as e:
+        raise HTTPException(status_code=404, detail=e)
     else:
-        raise HTTPException(status_code=404)
+        b64plot = generate_plot(berries_data)
+        response_dict = {
+            "img": b64plot,
+            "berries_data": berries_data
+        }
+        return response_dict

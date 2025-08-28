@@ -2,6 +2,8 @@
 This app includes a Dockerfile and a docker-compose file, which are used to spin up a FastAPI http server in a docker container.
 Docker compose takes care of mapping a container's port to a host's port so that you can access the api locally.
 
+##### If you don't have docker, you can install it by **[following these instructions](https://docs.docker.com/engine/install/)**
+
 In order to start the app, you need to run:
 ```bash
 cp .env.example .env
@@ -33,6 +35,10 @@ curl localhost:8000
 
 In order to run the app outside docker, you'll need to set up/install a couple of dependencies:
 
+#### Python
+
+##### If you don't have python, you can install it by **[following these instructions](https://www.python.org/downloads/)**
+
 #### UV
 I'm using `uv` as a python dependency manager and python's virtual env manager.
 
@@ -63,7 +69,7 @@ uv sync # installs dependencies in virtual env
 
 Then you can:
 ```bash
-uv run uvicorn berries:app --host 0.0.0.0 --port 8000
+uv run uvicorn berries:app --host 0.0.0.0 --port 8000 --env-file .env
 ```
 
 
@@ -71,4 +77,8 @@ uv run uvicorn berries:app --host 0.0.0.0 --port 8000
 Dev dependencies include pytest, you can run tests by running this in your terminal, which will run tests inside the container:
 ```bash
 docker compose exec berries uv run pytest
+```
+Or outside the container:
+```bash
+uv run --env-file .env -- pytest
 ```
