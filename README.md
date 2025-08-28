@@ -31,6 +31,14 @@ or using `curl` in your terminal:
 curl localhost:8000
 ```
 
+#### Available endpoints:
+
+- `/allBerryStats`
+> Returns berry statistics in json format
+
+- `/berriesGraph`
+> Displays an html page with a berries growth time histogram
+
 ### In case you want to run it outside the docker container
 
 In order to run the app outside docker, you'll need to set up/install a couple of dependencies:
