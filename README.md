@@ -19,7 +19,7 @@ docker compose build
 docker compose up
 ```
 
-### How to hit the app's API
+### How to hit the app's API (local)
 This will start the app and expose it through the `8000` port.
 (you can select a different port in the `ports` section inside the docker-compose.yaml file, for example `8001:8000` will map port 8001 in the host to port 8000 in the container)
 You can hit the api through a web browser navigating to:
@@ -31,7 +31,11 @@ or using `curl` in your terminal:
 curl localhost:8000
 ```
 
-#### Available endpoints:
+## Hosted using Render!
+An instance of the app has been hosted online using [Render.com](https://render.com/).
+Online Url: [https://some-berries.onrender.com/](https://some-berries.onrender.com/)
+
+## Available endpoints:
 
 - `/allBerryStats`
 > Returns berry statistics in json format
