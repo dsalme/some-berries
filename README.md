@@ -33,6 +33,7 @@ curl localhost:8000
 
 ## Hosted using Render!
 An instance of the app has been hosted online using [Render.com](https://render.com/).
+
 Online Url: [https://some-berries.onrender.com/](https://some-berries.onrender.com/)
 
 ## Available endpoints:
